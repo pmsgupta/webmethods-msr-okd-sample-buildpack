@@ -4,7 +4,6 @@ metadata:
   labels:
     app: mymicrosvc
   name: mymicrosvc
-  namespace: myproject
 spec:
   replicas: 1
   selector:
@@ -33,8 +32,7 @@ spec:
                configMapKeyRef:
                 key: myvalue
                 name: my-config
-          image: >-
-            172.30.1.1:5000/myproject/mymicrosvc:v1	  
+          image: image-registry.openshift-image-registry.svc:5000/presales-na-dev/msr-poc-umapp-ubi9:1.0
           imagePullPolicy: Always
           name: mymicrosvc
           ports:
@@ -54,14 +52,4 @@ spec:
       schedulerName: default-scheduler
       terminationGracePeriodSeconds: 30
   test: false
-  triggers:
-    - type: ConfigChange
-    - imageChangeParams:
-        automatic: true
-        containerNames:
-          - mymicrosvc
-        from:
-          kind: ImageStreamTag
-          name: 'mymicrosvc:v1'
-          namespace: myproject
-      type: ImageChange
+  triggers: []
